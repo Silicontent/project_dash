@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1pdl4fija2as"]
+
+[ext_resource type="PackedScene" uid="uid://bve1cfbvshfh" path="res://scenes/player.tscn" id="1_7b7ay"]
+[ext_resource type="Texture2D" uid="uid://d04s6rxf2g72d" path="res://assets/backgrounds/white_checkerboard.png" id="1_dffqn"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(-1920, -1080)
+texture = ExtResource("1_dffqn")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 5760, 3240)
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("1_7b7ay")]
+position = Vector2(960, 540)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.6, 0.6)
+limit_left = -1920
+limit_top = -1080
+limit_right = 3840
+limit_bottom = 2160
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+editor_draw_limits = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

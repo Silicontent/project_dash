@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://bve1cfbvshfh"]
+
+[ext_resource type="Texture2D" uid="uid://comh5glipl3dg" path="res://assets/entities/player.png" id="1_pai8u"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_ubrvx"]
+[ext_resource type="Texture2D" uid="uid://c6udmlctjjsjf" path="res://assets/entities/drop_shadow.png" id="1_ursq5"]
+[ext_resource type="PackedScene" uid="uid://b4hv2r62dsitt" path="res://scenes/components/health_component.tscn" id="3_81ae2"]
+[ext_resource type="PackedScene" uid="uid://d1n31bnnd4fy1" path="res://scenes/components/hitbox_component.tscn" id="4_ujm5p"]
+[ext_resource type="Script" path="res://scripts/player/dash_timer.gd" id="6_vhhde"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r28rb"]
+size = Vector2(50, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t351r"]
+size = Vector2(48, 48)
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_ubrvx")
+
+[node name="DropShadow" type="Sprite2D" parent="."]
+texture = ExtResource("1_ursq5")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_pai8u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r28rb")
+
+[node name="StateMachine" type="Node" parent="."]
+
+[node name="Idle" type="Node" parent="StateMachine"]
+
+[node name="Move" type="Node" parent="StateMachine"]
+
+[node name="Dash" type="Node" parent="StateMachine"]
+
+[node name="Dead" type="Node" parent="StateMachine"]
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_81ae2")]
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_ujm5p")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_t351r")
+
+[node name="DashTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("6_vhhde")
+
+[connection signal="timeout" from="DashTimer" to="DashTimer" method="_on_timeout"]
