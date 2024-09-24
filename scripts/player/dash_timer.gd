@@ -20,7 +20,3 @@ func reset() -> void:
 	wait_time = clamp(wait_time, INITIAL_TIME, MAX_TIME)
 	
 	start()
-
-
-func _on_timeout() -> void:
-	get_parent().dash_ready = true

@@ -47,5 +47,3 @@ shape = SubResource("RectangleShape2D_t351r")
 [node name="DashTimer" type="Timer" parent="."]
 one_shot = true
 script = ExtResource("6_vhhde")
-
-[connection signal="timeout" from="DashTimer" to="DashTimer" method="_on_timeout"]
