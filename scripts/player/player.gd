@@ -27,29 +27,33 @@ func _ready() -> void:
 	current_speed = BASE_SPEED
 
 
-func _physics_process(_delta: float) -> void:
-	move()
-	
-	# determine dash
-	if Input.is_action_just_pressed("mv_dash") and dash_ready:
-		dash_ready = false
-		emit_signal("reset_dash_charge")
+func _process(_delta: float) -> void:
+	$Label.text = $StateMachine.state.name
 
 
 # MOVING ======================================================================
-func move() -> void:
+func move() -> Vector2:
 	# determine move direction
 	var direction := Input.get_vector("mv_left", "mv_right", "mv_up", "mv_down")
 	
-	# apply acceleration/friction
-	if direction != Vector2.ZERO:
-		velocity.x = lerp(velocity.x, direction.x * current_speed, ACCELERATION)
-		velocity.y = lerp(velocity.y, direction.y * current_speed, ACCELERATION)
-	else:
-		velocity.x = lerp(velocity.x, 0.0, FRICTION)
-		velocity.y = lerp(velocity.y, 0.0, FRICTION)
+	# apply acceleration
+	velocity.x = lerp(velocity.x, direction.x * current_speed, ACCELERATION)
+	velocity.y = lerp(velocity.y, direction.y * current_speed, ACCELERATION)
 	
 	# move the player
+	move_and_slide()
+	
+	# used when checking if the player is no longer moving
+	return direction
+
+
+func stop() -> void:
+	print(velocity)
+	
+	# apply friction
+	velocity.x = lerp(velocity.x, 0.0, FRICTION)
+	velocity.y = lerp(velocity.y, 0.0, FRICTION)
+	
 	move_and_slide()
 
 
