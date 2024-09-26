@@ -1,3 +1,6 @@
+# Having an idle state doesn't do much except for ensuring the player
+# is unable to dash while they are not moving
+
 extends PlayerState
 
 

@@ -20,6 +20,10 @@ var current_speed: float
 
 # flags if the dash is charged
 var dash_ready := false
+# flags if the player is currently dashing
+var dashing := false
+# flags if the player is unable to take damage
+var vulnerable := true
 
 
 func _ready() -> void:
@@ -48,15 +52,12 @@ func move() -> Vector2:
 
 
 func stop() -> void:
-	print(velocity)
-	
 	# apply friction
 	velocity.x = lerp(velocity.x, 0.0, FRICTION)
 	velocity.y = lerp(velocity.y, 0.0, FRICTION)
-	
 	move_and_slide()
 
 
 # DASHING =====================================================================
-func _on_dash_timer_timeout() -> void:
+func _on_dash_charge_timer_timeout() -> void:
 	dash_ready = true

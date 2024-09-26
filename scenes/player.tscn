@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="4_rjewk"]
 [ext_resource type="PackedScene" uid="uid://d1n31bnnd4fy1" path="res://scenes/components/hitbox_component.tscn" id="4_ujm5p"]
 [ext_resource type="Script" path="res://scripts/player/state_idle.gd" id="5_ymcvx"]
-[ext_resource type="Script" path="res://scripts/player/dash_timer.gd" id="6_vhhde"]
 [ext_resource type="Script" path="res://scripts/player/state_move.gd" id="6_vsqx7"]
+[ext_resource type="Script" path="res://scripts/player/state_dash.gd" id="7_csa4v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r28rb"]
 size = Vector2(50, 50)
@@ -44,6 +44,7 @@ script = ExtResource("5_ymcvx")
 script = ExtResource("6_vsqx7")
 
 [node name="Dash" type="Node" parent="StateMachine"]
+script = ExtResource("7_csa4v")
 
 [node name="Dead" type="Node" parent="StateMachine"]
 
@@ -56,8 +57,6 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("RectangleShape2D_t351r")
 
 [node name="DashTimer" type="Timer" parent="."]
-one_shot = true
-script = ExtResource("6_vhhde")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -127.0
