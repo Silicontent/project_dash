@@ -8,9 +8,9 @@ signal reset_dash_charge
 # regular movement speed
 const BASE_SPEED := 1000.0
 # speed during a dash
-const DASH_SPEED := 1500.0
+const DASH_SPEED := 2500.0
 # speed at the beginning of a dash
-const MAX_SPEED := 2000.0
+const MAX_SPEED := 4000.0
 
 const ACCELERATION := 0.3
 const FRICTION := 0.25
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	$Label.text = $StateMachine.state.name
+	$Label.text = $StateMachine.state.name + "\n" + str(current_speed)
 
 
 # MOVING ======================================================================
