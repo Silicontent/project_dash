@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1pdl4fija2as"]
+[gd_scene load_steps=7 format=3 uid="uid://d1pdl4fija2as"]
 
 [ext_resource type="PackedScene" uid="uid://bve1cfbvshfh" path="res://scenes/player.tscn" id="1_7b7ay"]
 [ext_resource type="Texture2D" uid="uid://d04s6rxf2g72d" path="res://assets/backgrounds/white_checkerboard.png" id="1_dffqn"]
 [ext_resource type="Script" path="res://scripts/player/dash_charge_timer.gd" id="3_5k3lf"]
+[ext_resource type="Script" path="res://scripts/player/camera.gd" id="3_35rvp"]
 [ext_resource type="Texture2D" uid="uid://d3wxiovqjtwb0" path="res://assets/ui/cooldown_bar.png" id="3_vc5jr"]
 [ext_resource type="Script" path="res://scripts/hud/dash_meter.gd" id="4_ntdor"]
 
@@ -21,7 +22,6 @@ metadata/_edit_lock_ = true
 position = Vector2(960, 540)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(0.6, 0.6)
 limit_left = -1920
 limit_top = -1080
 limit_right = 3840
@@ -35,6 +35,7 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 editor_draw_limits = true
+script = ExtResource("3_35rvp")
 
 [node name="Timers" type="Node" parent="."]
 
