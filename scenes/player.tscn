@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bve1cfbvshfh"]
+[gd_scene load_steps=9 format=3 uid="uid://bve1cfbvshfh"]
 
 [ext_resource type="Texture2D" uid="uid://comh5glipl3dg" path="res://assets/entities/player.png" id="1_pai8u"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_ubrvx"]
 [ext_resource type="Texture2D" uid="uid://c6udmlctjjsjf" path="res://assets/entities/drop_shadow.png" id="1_ursq5"]
 [ext_resource type="PackedScene" uid="uid://b4hv2r62dsitt" path="res://scenes/components/health_component.tscn" id="3_81ae2"]
 [ext_resource type="PackedScene" uid="uid://d1n31bnnd4fy1" path="res://scenes/components/hitbox_component.tscn" id="4_ujm5p"]
+[ext_resource type="Script" path="res://scripts/components/dash_component.gd" id="5_epnig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r28rb"]
 size = Vector2(50, 50)
@@ -25,14 +26,18 @@ texture = ExtResource("1_pai8u")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_r28rb")
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_81ae2")]
-
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_ujm5p")]
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("RectangleShape2D_t351r")
 
+[node name="HealthComponent" parent="." instance=ExtResource("3_81ae2")]
+
+[node name="DashComponent" type="Node" parent="."]
+script = ExtResource("5_epnig")
+
 [node name="DashTimer" type="Timer" parent="."]
+editor_description = "This timer keeps track of the amount of time left before the player returns to their normal speed from a dash."
 wait_time = 5.0
 one_shot = true

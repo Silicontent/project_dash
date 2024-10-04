@@ -18,6 +18,7 @@ const FRICTION := 0.25
 var current_speed: float
 #endregion
 
+#region dashing variables
 # amount of time the dash lasts for
 @onready var dash_timer := $DashTimer
 
@@ -25,6 +26,8 @@ var current_speed: float
 var dash_ready := false
 # flags if the player is currently dashing
 var dashing := false
+#endregion
+
 # flags if the player is unable to take damage
 var vulnerable := true
 

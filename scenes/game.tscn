@@ -40,6 +40,7 @@ script = ExtResource("3_35rvp")
 [node name="Timers" type="Node" parent="."]
 
 [node name="DashChargeTimer" type="Timer" parent="Timers"]
+editor_description = "This timer keeps track of the cool-down period between dashes."
 one_shot = true
 script = ExtResource("3_5k3lf")
 
