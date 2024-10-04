@@ -18,6 +18,9 @@ const FRICTION := 0.25
 var current_speed: float
 #endregion
 
+# amount of time the dash lasts for
+@onready var dash_timer := $DashTimer
+
 # flags if the dash is charged
 var dash_ready := false
 # flags if the player is currently dashing
@@ -31,30 +34,28 @@ func _ready() -> void:
 	current_speed = BASE_SPEED
 
 
-func _process(_delta: float) -> void:
-	$Label.text = $StateMachine.state.name + "\n" + str(current_speed)
+func _physics_process(delta: float) -> void:
+	move()
+	
+	# start dashing if the player is able to
+	if Input.is_action_just_pressed("mv_dash") and dash_ready:
+		pass
 
 
 # MOVING ======================================================================
-func move() -> Vector2:
+func move() -> void:
 	# determine move direction
 	var direction := Input.get_vector("mv_left", "mv_right", "mv_up", "mv_down")
 	
-	# apply acceleration
-	velocity.x = lerp(velocity.x, direction.x * current_speed, ACCELERATION)
-	velocity.y = lerp(velocity.y, direction.y * current_speed, ACCELERATION)
+	# apply acceleration or friction
+	if direction != Vector2.ZERO:
+		velocity.x = lerp(velocity.x, direction.x * current_speed, ACCELERATION)
+		velocity.y = lerp(velocity.y, direction.y * current_speed, ACCELERATION)
+	else:
+		velocity.x = lerp(velocity.x, 0.0, FRICTION)
+		velocity.y = lerp(velocity.y, 0.0, FRICTION)
 	
 	# move the player
-	move_and_slide()
-	
-	# used when checking if the player is no longer moving
-	return direction
-
-
-func stop() -> void:
-	# apply friction
-	velocity.x = lerp(velocity.x, 0.0, FRICTION)
-	velocity.y = lerp(velocity.y, 0.0, FRICTION)
 	move_and_slide()
 
 

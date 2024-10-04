@@ -1,24 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://bve1cfbvshfh"]
+[gd_scene load_steps=8 format=3 uid="uid://bve1cfbvshfh"]
 
 [ext_resource type="Texture2D" uid="uid://comh5glipl3dg" path="res://assets/entities/player.png" id="1_pai8u"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_ubrvx"]
 [ext_resource type="Texture2D" uid="uid://c6udmlctjjsjf" path="res://assets/entities/drop_shadow.png" id="1_ursq5"]
 [ext_resource type="PackedScene" uid="uid://b4hv2r62dsitt" path="res://scenes/components/health_component.tscn" id="3_81ae2"]
-[ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="4_rjewk"]
 [ext_resource type="PackedScene" uid="uid://d1n31bnnd4fy1" path="res://scenes/components/hitbox_component.tscn" id="4_ujm5p"]
-[ext_resource type="Script" path="res://scripts/player/state_idle.gd" id="5_ymcvx"]
-[ext_resource type="Script" path="res://scripts/player/state_move.gd" id="6_vsqx7"]
-[ext_resource type="Script" path="res://scripts/player/state_dash.gd" id="7_csa4v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r28rb"]
 size = Vector2(50, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t351r"]
 size = Vector2(48, 48)
-
-[sub_resource type="LabelSettings" id="LabelSettings_c7mrg"]
-font_size = 20
-font_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
@@ -33,21 +25,6 @@ texture = ExtResource("1_pai8u")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_r28rb")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("4_rjewk")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("5_ymcvx")
-
-[node name="Move" type="Node" parent="StateMachine"]
-script = ExtResource("6_vsqx7")
-
-[node name="Dash" type="Node" parent="StateMachine"]
-script = ExtResource("7_csa4v")
-
-[node name="Dead" type="Node" parent="StateMachine"]
-
 [node name="HealthComponent" parent="." instance=ExtResource("3_81ae2")]
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_ujm5p")]
@@ -57,11 +34,5 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("RectangleShape2D_t351r")
 
 [node name="DashTimer" type="Timer" parent="."]
-
-[node name="Label" type="Label" parent="."]
-offset_left = -127.0
-offset_top = -93.0
-offset_right = 127.0
-offset_bottom = -48.0
-label_settings = SubResource("LabelSettings_c7mrg")
-horizontal_alignment = 1
+wait_time = 5.0
+one_shot = true
