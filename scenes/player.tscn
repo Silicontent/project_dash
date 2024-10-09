@@ -37,7 +37,9 @@ shape = SubResource("RectangleShape2D_t351r")
 [node name="DashComponent" type="Node" parent="."]
 script = ExtResource("5_epnig")
 
-[node name="DashTimer" type="Timer" parent="."]
+[node name="DashTimer" type="Timer" parent="DashComponent"]
 editor_description = "This timer keeps track of the amount of time left before the player returns to their normal speed from a dash."
 wait_time = 5.0
 one_shot = true
+
+[connection signal="timeout" from="DashComponent/DashTimer" to="DashComponent" method="_on_dash_timer_timeout"]

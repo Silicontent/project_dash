@@ -1,9 +1,6 @@
 class_name Player
 extends CharacterBody2D
 
-# sent to the dash timer to tell it to restart
-signal reset_dash_charge
-
 #region speed & movement variables
 # regular movement speed
 const BASE_SPEED := 1000.0
@@ -18,15 +15,8 @@ const FRICTION := 0.25
 var current_speed: float
 #endregion
 
-#region dashing variables
-# amount of time the dash lasts for
-@onready var dash_timer := $DashTimer
-
-# flags if the dash is charged
-var dash_ready := false
-# flags if the player is currently dashing
-var dashing := false
-#endregion
+# controls logic related to dashing
+@onready var dash := $DashComponent
 
 # flags if the player is unable to take damage
 var vulnerable := true
@@ -39,13 +29,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	move()
-	
-	# start dashing if the player is able to
-	if Input.is_action_just_pressed("mv_dash") and dash_ready:
-		pass
 
 
-# MOVING ======================================================================
+# MOVING ================================================================================
 func move() -> void:
 	# determine move direction
 	var direction := Input.get_vector("mv_left", "mv_right", "mv_up", "mv_down")
@@ -60,8 +46,3 @@ func move() -> void:
 	
 	# move the player
 	move_and_slide()
-
-
-# DASHING =====================================================================
-func _on_dash_charge_timer_timeout() -> void:
-	dash_ready = true
