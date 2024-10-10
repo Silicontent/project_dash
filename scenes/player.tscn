@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bve1cfbvshfh"]
+[gd_scene load_steps=10 format=3 uid="uid://bve1cfbvshfh"]
 
 [ext_resource type="Texture2D" uid="uid://comh5glipl3dg" path="res://assets/entities/player.png" id="1_pai8u"]
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_ubrvx"]
@@ -12,6 +12,10 @@ size = Vector2(50, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t351r"]
 size = Vector2(48, 48)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gihss"]
+font_size = 26
+font_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
@@ -34,12 +38,24 @@ shape = SubResource("RectangleShape2D_t351r")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_81ae2")]
 
-[node name="DashComponent" type="Node" parent="."]
+[node name="DashComponent" type="Node" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("5_epnig")
+player = NodePath("..")
 
 [node name="DashTimer" type="Timer" parent="DashComponent"]
 editor_description = "This timer keeps track of the amount of time left before the player returns to their normal speed from a dash."
 wait_time = 5.0
 one_shot = true
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -90.0
+offset_top = -87.0
+offset_right = 90.0
+offset_bottom = -43.0
+text = "1000"
+label_settings = SubResource("LabelSettings_gihss")
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [connection signal="timeout" from="DashComponent/DashTimer" to="DashComponent" method="_on_dash_timer_timeout"]

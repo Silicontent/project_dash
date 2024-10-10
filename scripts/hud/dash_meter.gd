@@ -15,3 +15,8 @@ func _process(_delta: float) -> void:
 	# set the bar display (formatting it to have two decimal places)
 	# https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_format_string.html#padding
 	dash_bar_display.text = "%.2f" % dash_timer.time_left
+
+
+func _on_dash_bar_value_changed(value: float) -> void:
+	# hides the number display if the charge is ready
+	dash_bar_display.visible = (value != 0)
