@@ -32,8 +32,6 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	move()
-	
-	%Label.text = str(round(current_speed))
 
 
 # MOVING ================================================================================
