@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://bve1cfbvshfh" path="res://scenes/player.tscn" id="1_7b7ay"]
 [ext_resource type="Texture2D" uid="uid://d04s6rxf2g72d" path="res://assets/backgrounds/white_checkerboard.png" id="1_dffqn"]
-[ext_resource type="Script" path="res://scripts/player/dash_charge_timer.gd" id="3_5k3lf"]
-[ext_resource type="Script" path="res://scripts/player/camera.gd" id="3_35rvp"]
+[ext_resource type="Script" uid="uid://d144d8jxlqrj7" path="res://scripts/player/dash_charge_timer.gd" id="3_5k3lf"]
+[ext_resource type="Script" uid="uid://dkuub2rhxpiq6" path="res://scripts/player/camera.gd" id="3_35rvp"]
 [ext_resource type="Texture2D" uid="uid://d3wxiovqjtwb0" path="res://assets/ui/cooldown_bar.png" id="3_vc5jr"]
-[ext_resource type="Script" path="res://scripts/hud/dash_meter.gd" id="4_ntdor"]
+[ext_resource type="Script" uid="uid://617ckevuwlhw" path="res://scripts/hud/dash_meter.gd" id="4_ntdor"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0ni26"]
 font_size = 20

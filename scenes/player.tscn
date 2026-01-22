@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://bve1cfbvshfh"]
 
 [ext_resource type="Texture2D" uid="uid://comh5glipl3dg" path="res://assets/entities/player.png" id="1_pai8u"]
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_ubrvx"]
+[ext_resource type="Script" uid="uid://ct802ndh7rvcp" path="res://scripts/player/player.gd" id="1_ubrvx"]
 [ext_resource type="Texture2D" uid="uid://c6udmlctjjsjf" path="res://assets/entities/drop_shadow.png" id="1_ursq5"]
 [ext_resource type="PackedScene" uid="uid://b4hv2r62dsitt" path="res://scenes/components/health_component.tscn" id="3_81ae2"]
 [ext_resource type="PackedScene" uid="uid://d1n31bnnd4fy1" path="res://scenes/components/hitbox_component.tscn" id="4_ujm5p"]
-[ext_resource type="Script" path="res://scripts/components/dash_component.gd" id="5_epnig"]
+[ext_resource type="Script" uid="uid://pcj1am8i7m5d" path="res://scripts/components/dash_component.gd" id="5_epnig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r28rb"]
 size = Vector2(50, 50)
