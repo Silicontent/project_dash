@@ -25,7 +25,7 @@ func dash() -> void:
 	
 	# slow to the regular dashing speed
 	var tween = get_tree().create_tween()
-	tween.tween_property(player, "current_speed", player.DASH_SPEED, 0.5).set_ease(Tween.EASE_OUT)
+	tween.tween_property(player, "current_speed", player.DASH_SPEED, 0.5).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	
 	# start the dashing timer

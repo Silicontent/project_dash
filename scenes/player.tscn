@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bve1cfbvshfh"]
+[gd_scene format=3 uid="uid://bve1cfbvshfh"]
 
 [ext_resource type="Texture2D" uid="uid://comh5glipl3dg" path="res://assets/entities/player.png" id="1_pai8u"]
 [ext_resource type="Script" uid="uid://ct802ndh7rvcp" path="res://scripts/player/player.gd" id="1_ubrvx"]
@@ -13,32 +13,32 @@ size = Vector2(50, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t351r"]
 size = Vector2(48, 48)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=2038388119]
 motion_mode = 1
 script = ExtResource("1_ubrvx")
 
-[node name="DropShadow" type="Sprite2D" parent="."]
+[node name="DropShadow" type="Sprite2D" parent="." unique_id=1660097056]
 texture = ExtResource("1_ursq5")
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=2127009385]
 texture = ExtResource("1_pai8u")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=210088600]
 shape = SubResource("RectangleShape2D_r28rb")
 
-[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_ujm5p")]
+[node name="HitboxComponent" parent="." unique_id=1771182537 node_paths=PackedStringArray("health_component") instance=ExtResource("4_ujm5p")]
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=482842939]
 shape = SubResource("RectangleShape2D_t351r")
 
-[node name="HealthComponent" parent="." instance=ExtResource("3_81ae2")]
+[node name="HealthComponent" parent="." unique_id=1584489544 instance=ExtResource("3_81ae2")]
 
-[node name="DashComponent" type="Node" parent="." node_paths=PackedStringArray("player")]
+[node name="DashComponent" type="Node" parent="." unique_id=579700862 node_paths=PackedStringArray("player")]
 script = ExtResource("5_epnig")
 player = NodePath("..")
 
-[node name="DashTimer" type="Timer" parent="DashComponent"]
+[node name="DashTimer" type="Timer" parent="DashComponent" unique_id=1198700536]
 editor_description = "This timer keeps track of the amount of time left before the player returns to their normal speed from a dash."
 wait_time = 5.0
 one_shot = true
