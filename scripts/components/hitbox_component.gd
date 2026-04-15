@@ -5,7 +5,7 @@ extends Area2D
 @export var health_component: HealthComponent
 
 
-func damage(amt: float) -> void:
+func damage(amt: float = 1.0) -> void:
 	if health_component:
 		# tells the health component (if it exists) to reduce HP
 		health_component.damage(amt)

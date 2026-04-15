@@ -5,10 +5,16 @@ const INITIAL_TIME := 7.0
 # the dash charge can't take longer than this
 const MAX_TIME := 20.0
 # how much the dash charge time increases by
-var TIME_MULTIPLIER := 1.25
+const TIME_MULTIPLIER := 1.25
+
+# reference to the player
+@export var player: Player
 
 
 func _ready() -> void:
+	# connect to player's dash component to reset this timer
+	player.dash.connect("reset", reset)
+	
 	# set initial time
 	wait_time = INITIAL_TIME
 	start()

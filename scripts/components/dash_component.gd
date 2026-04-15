@@ -1,5 +1,8 @@
 extends Node
 
+# sent to the player to reset the dash charge
+signal reset
+
 @onready var dash_timer := $DashTimer
 # reference to the player for better autocompletion
 @export var player: Player
@@ -24,7 +27,7 @@ func dash() -> void:
 	player.current_speed = player.MAX_SPEED
 	
 	# slow to the regular dashing speed
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	tween.tween_property(player, "current_speed", player.DASH_SPEED, 0.5).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	
@@ -36,9 +39,9 @@ func dash() -> void:
 # runs when the current dash attack runs out
 func _on_dash_timer_timeout() -> void:
 	# restart the dash charge-up
-	player.emit_signal("reset_dash_charge")
+	reset.emit()
 	
-	# start iframe timer
+	# TODO: start iframe timer
 	# slow to regular speed
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	tween.tween_property(player, "current_speed", player.BASE_SPEED, 2.0).set_ease(Tween.EASE_OUT)

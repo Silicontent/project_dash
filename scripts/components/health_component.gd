@@ -19,4 +19,4 @@ func damage(amt: float) -> void:
 	health -= amt
 	
 	if health <= 0:
-		emit_signal("entity_killed")
+		entity_killed.emit()

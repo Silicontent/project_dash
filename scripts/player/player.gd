@@ -1,15 +1,12 @@
 class_name Player
 extends CharacterBody2D
 
-# sent to the dash timer to tell it to restart
-signal reset_dash_charge
-
 #region speed & movement variables
 # regular movement speed
 const BASE_SPEED := 1000.0
-# speed during a dash
+# main speed during a dash
 const DASH_SPEED := 1750.0
-# speed at the beginning of a dash
+# initial boost of speed at the beginning of a dash
 const MAX_SPEED := 5000.0
 
 const ACCELERATION := 0.3
