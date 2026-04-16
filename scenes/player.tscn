@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://d1n31bnnd4fy1" path="res://scenes/components/hitbox_component.tscn" id="4_ujm5p"]
 [ext_resource type="Script" uid="uid://pcj1am8i7m5d" path="res://scripts/components/dash_component.gd" id="5_epnig"]
 [ext_resource type="AudioStream" uid="uid://b0iofke7vjb1e" path="res://assets/audio/dash.mp3" id="7_fjrip"]
+[ext_resource type="Script" uid="uid://d144d8jxlqrj7" path="res://scripts/player/dash_charge_timer.gd" id="8_smehm"]
+[ext_resource type="AudioStream" uid="uid://bogbrcl8oohuk" path="res://assets/audio/dash_ready.wav" id="9_ur7pv"]
 
 [sub_resource type="Curve" id="Curve_smehm"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -51,8 +53,8 @@ angle_min = -44.99999
 angle_max = 45.00001
 angle_curve = SubResource("CurveTexture_smehm")
 spread = 180.0
-initial_velocity_min = 377.88
-initial_velocity_max = 419.55
+initial_velocity_min = 440.38
+initial_velocity_max = 586.20996
 gravity = Vector3(0, 0, 0)
 scale_min = 24.0
 scale_max = 26.0
@@ -69,15 +71,17 @@ size = Vector2(48, 48)
 motion_mode = 1
 script = ExtResource("1_ubrvx")
 
-[node name="DropShadow" type="Sprite2D" parent="." unique_id=1660097056]
+[node name="Appearance" type="Node2D" parent="." unique_id=359808171]
+
+[node name="DropShadow" type="Sprite2D" parent="Appearance" unique_id=1660097056]
 texture = ExtResource("1_ursq5")
 
-[node name="MoveParticles" type="GPUParticles2D" parent="." unique_id=1499714314]
+[node name="MoveParticles" type="GPUParticles2D" parent="Appearance" unique_id=1499714314]
 emitting = false
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_fjrip")
 
-[node name="ExplosionParticles" type="GPUParticles2D" parent="." unique_id=1584392320]
+[node name="ExplosionParticles" type="GPUParticles2D" parent="Appearance" unique_id=1584392320]
 emitting = false
 amount = 32
 lifetime = 3.0
@@ -85,32 +89,48 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_d2wvv")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=2127009385]
+[node name="Sprite" type="Sprite2D" parent="Appearance" unique_id=2127009385]
 self_modulate = Color(0.29803923, 1, 0, 1)
 texture = ExtResource("3_fjrip")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=210088600]
 shape = SubResource("RectangleShape2D_r28rb")
 
-[node name="HitboxComponent" parent="." unique_id=1771182537 node_paths=PackedStringArray("health_component") instance=ExtResource("4_ujm5p")]
-health_component = NodePath("../HealthComponent")
+[node name="HitboxComponent" parent="." unique_id=1771182537 node_paths=PackedStringArray("_health_component") instance=ExtResource("4_ujm5p")]
+collision_layer = 1
+collision_mask = 38
+_health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=482842939]
 shape = SubResource("RectangleShape2D_t351r")
 
 [node name="HealthComponent" parent="." unique_id=1584489544 instance=ExtResource("3_81ae2")]
 
-[node name="DashComponent" type="Node" parent="." unique_id=579700862 node_paths=PackedStringArray("player")]
+[node name="DashComponent" type="Node" parent="." unique_id=579700862 node_paths=PackedStringArray("_player", "_dash_particles")]
 script = ExtResource("5_epnig")
-player = NodePath("..")
+_player = NodePath("..")
+_dash_particles = NodePath("../Appearance/ExplosionParticles")
 
 [node name="DashTimer" type="Timer" parent="DashComponent" unique_id=1198700536]
 editor_description = "This timer keeps track of the amount of time left before the player returns to their normal speed from a dash."
 wait_time = 5.0
 one_shot = true
 
+[node name="DashChargeTimer" type="Timer" parent="DashComponent" unique_id=1951214161]
+editor_description = "How long the player has until they can use their dash again. At this timer's timeout, the \"dash ready\" sound will play."
+one_shot = true
+script = ExtResource("8_smehm")
+
 [node name="DashSFX" type="AudioStreamPlayer" parent="DashComponent" unique_id=1620546593]
+editor_description = "The sound that plays at the beginning of a dash."
 stream = ExtResource("7_fjrip")
 bus = &"SFX"
 
+[node name="DashReadySFX" type="AudioStreamPlayer" parent="DashComponent" unique_id=214578348]
+editor_description = "The sound that plays when the player's dash is ready to be used."
+stream = ExtResource("9_ur7pv")
+bus = &"SFX"
+
+[connection signal="reset" from="DashComponent" to="DashComponent/DashChargeTimer" method="_reset"]
 [connection signal="timeout" from="DashComponent/DashTimer" to="DashComponent" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashComponent/DashChargeTimer" to="DashComponent" method="_on_dash_charge_timeout"]
