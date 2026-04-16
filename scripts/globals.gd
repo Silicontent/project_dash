@@ -1,5 +1,8 @@
 extends Node
 
+# the current game's score
+var score: int = 0
+
 var _quit_pressed := false
 
 

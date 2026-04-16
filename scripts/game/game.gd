@@ -8,5 +8,6 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	# DEBUG: show FPS counter
+	# DEBUG
 	%DebugFPS.text = "%d FPS" % [roundf(Engine.get_frames_per_second())]
+	%DebugScore.text = "Score: %d" % [Globals.score]

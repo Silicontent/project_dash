@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Project: Dash"
-config/version="0.0.2"
+config/version="0.0.3"
 config/tags=PackedStringArray("main_project")
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
@@ -39,6 +39,10 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="Project- Dash"
+
+[global_group]
+
+enemies="All enemies, excluding bosses."
 
 [input]
 

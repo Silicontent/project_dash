@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://c6udmlctjjsjf" path="res://assets/entities/drop_shadow.png" id="1_ursq5"]
 [ext_resource type="PackedScene" uid="uid://b4hv2r62dsitt" path="res://scenes/components/health_component.tscn" id="3_81ae2"]
 [ext_resource type="Texture2D" uid="uid://bvj3qtsr7xr5a" path="res://assets/entities/base_rect.png" id="3_fjrip"]
-[ext_resource type="PackedScene" uid="uid://d1n31bnnd4fy1" path="res://scenes/components/hitbox_component.tscn" id="4_ujm5p"]
 [ext_resource type="Script" uid="uid://pcj1am8i7m5d" path="res://scripts/components/dash_component.gd" id="5_epnig"]
 [ext_resource type="AudioStream" uid="uid://b0iofke7vjb1e" path="res://assets/audio/dash.mp3" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://d144d8jxlqrj7" path="res://scripts/player/dash_charge_timer.gd" id="8_smehm"]
@@ -35,14 +34,14 @@ color = Color(0.29803923, 1, 0, 1)
 _data = [Vector2(0, 0.75280905), 0.0, 0.0, 0, 0, Vector2(1, 0.32584274), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_smehm"]
+[sub_resource type="CurveTexture" id="CurveTexture_y4r1p"]
 curve = SubResource("Curve_fjrip")
 
 [sub_resource type="Curve" id="Curve_ur7pv"]
 _data = [Vector2(0, 1), 0.0, 0.11709045, 0, 0, Vector2(1, 0), -0.71508884, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_y4r1p"]
+[sub_resource type="CurveTexture" id="CurveTexture_d2wvv"]
 curve = SubResource("Curve_ur7pv")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d2wvv"]
@@ -51,23 +50,80 @@ emission_shape = 1
 emission_sphere_radius = 5.0
 angle_min = -44.99999
 angle_max = 45.00001
-angle_curve = SubResource("CurveTexture_smehm")
+angle_curve = SubResource("CurveTexture_y4r1p")
 spread = 180.0
 initial_velocity_min = 440.38
 initial_velocity_max = 586.20996
 gravity = Vector3(0, 0, 0)
 scale_min = 24.0
 scale_max = 26.0
-scale_curve = SubResource("CurveTexture_y4r1p")
+scale_curve = SubResource("CurveTexture_d2wvv")
 color = Color(0.29803923, 1, 0, 1)
 
+[sub_resource type="Animation" id="Animation_y4r1p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.29803923, 1, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ur7pv"]
+resource_name = "invulnerable"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Color(0.29803923, 1, 0, 0.5019608), Color(0.29803923, 1, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_d2wvv"]
+resource_name = "normal"
+length = 0.001
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.29803923, 1, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y4r1p"]
+_data = {
+&"RESET": SubResource("Animation_y4r1p"),
+&"invulnerable": SubResource("Animation_ur7pv"),
+&"normal": SubResource("Animation_d2wvv")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r28rb"]
-size = Vector2(50, 50)
+size = Vector2(58, 58)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t351r"]
 size = Vector2(48, 48)
 
 [node name="Player" type="CharacterBody2D" unique_id=2038388119]
+collision_mask = 24
 motion_mode = 1
 script = ExtResource("1_ubrvx")
 
@@ -93,23 +149,26 @@ process_material = SubResource("ParticleProcessMaterial_d2wvv")
 self_modulate = Color(0.29803923, 1, 0, 1)
 texture = ExtResource("3_fjrip")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Appearance" unique_id=449414639]
+libraries/ = SubResource("AnimationLibrary_y4r1p")
+speed_scale = 3.0
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=210088600]
 shape = SubResource("RectangleShape2D_r28rb")
 
-[node name="HitboxComponent" parent="." unique_id=1771182537 node_paths=PackedStringArray("_health_component") instance=ExtResource("4_ujm5p")]
-collision_layer = 1
+[node name="Hitbox" type="Area2D" parent="." unique_id=1265974101]
 collision_mask = 38
-_health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=482842939]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=482842939]
 shape = SubResource("RectangleShape2D_t351r")
 
 [node name="HealthComponent" parent="." unique_id=1584489544 instance=ExtResource("3_81ae2")]
 
-[node name="DashComponent" type="Node" parent="." unique_id=579700862 node_paths=PackedStringArray("_player", "_dash_particles")]
+[node name="DashComponent" type="Node" parent="." unique_id=579700862 node_paths=PackedStringArray("_player", "_dash_particles", "_anim_player")]
 script = ExtResource("5_epnig")
 _player = NodePath("..")
 _dash_particles = NodePath("../Appearance/ExplosionParticles")
+_anim_player = NodePath("../Appearance/AnimationPlayer")
 
 [node name="DashTimer" type="Timer" parent="DashComponent" unique_id=1198700536]
 editor_description = "This timer keeps track of the amount of time left before the player returns to their normal speed from a dash."
@@ -120,6 +179,10 @@ one_shot = true
 editor_description = "How long the player has until they can use their dash again. At this timer's timeout, the \"dash ready\" sound will play."
 one_shot = true
 script = ExtResource("8_smehm")
+
+[node name="InvulnerableTimer" type="Timer" parent="DashComponent" unique_id=763528631]
+wait_time = 3.0
+one_shot = true
 
 [node name="DashSFX" type="AudioStreamPlayer" parent="DashComponent" unique_id=1620546593]
 editor_description = "The sound that plays at the beginning of a dash."
@@ -136,3 +199,4 @@ bus = &"SFX"
 [connection signal="reset" from="DashComponent" to="DashComponent/DashChargeTimer" method="_reset"]
 [connection signal="timeout" from="DashComponent/DashTimer" to="DashComponent" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashComponent/DashChargeTimer" to="DashComponent" method="_on_dash_charge_timeout"]
+[connection signal="timeout" from="DashComponent/InvulnerableTimer" to="DashComponent" method="_on_invulnerable_timer_timeout"]

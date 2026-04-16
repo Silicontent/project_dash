@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://1l6qvaf0sngt"]
+
+[ext_resource type="Texture2D" uid="uid://bvj3qtsr7xr5a" path="res://assets/entities/base_rect.png" id="1_12mc7"]
+[ext_resource type="Script" uid="uid://ds3xbkggpa8b0" path="res://scripts/enemy/enemy.gd" id="1_ynm34"]
+[ext_resource type="Texture2D" uid="uid://c6udmlctjjsjf" path="res://assets/entities/drop_shadow.png" id="2_ky18x"]
+[ext_resource type="AudioStream" uid="uid://cxlow2tcsb53l" path="res://assets/audio/enemy_death.wav" id="4_ynm34"]
+
+[sub_resource type="Curve" id="Curve_ynm34"]
+_data = [Vector2(0, 0.75280905), 0.0, 0.0, 0, 0, Vector2(1, 0.32584274), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2slbo"]
+curve = SubResource("Curve_ynm34")
+
+[sub_resource type="Curve" id="Curve_if8uh"]
+_data = [Vector2(0, 1), 0.0, 0.11709045, 0, 0, Vector2(1, 0), -0.71508884, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ilacs"]
+curve = SubResource("Curve_if8uh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m0phi"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+angle_min = -44.99999
+angle_max = 45.00001
+angle_curve = SubResource("CurveTexture_2slbo")
+spread = 180.0
+initial_velocity_min = 546.31
+initial_velocity_max = 692.14
+gravity = Vector3(0, 0, 0)
+scale_min = 24.0
+scale_max = 26.0
+scale_curve = SubResource("CurveTexture_ilacs")
+color = Color(1, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12mc7"]
+size = Vector2(58, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ky18x"]
+size = Vector2(56, 56)
+
+[node name="NormalEnemy" type="CharacterBody2D" unique_id=1658889037 groups=["enemies"]]
+collision_layer = 2
+collision_mask = 16
+motion_mode = 1
+script = ExtResource("1_ynm34")
+speed = 700.0
+reward = 1
+
+[node name="DropShadow" type="Sprite2D" parent="." unique_id=302610994]
+texture = ExtResource("2_ky18x")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="." unique_id=929912278]
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_m0phi")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=330916629]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_12mc7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2126035142]
+shape = SubResource("RectangleShape2D_12mc7")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=161487116]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=523347463]
+shape = SubResource("RectangleShape2D_ky18x")
+
+[node name="DeathSFX" type="AudioStreamPlayer" parent="." unique_id=467677438]
+stream = ExtResource("4_ynm34")
+volume_db = -5.0
+bus = &"SFX"
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_entered"]

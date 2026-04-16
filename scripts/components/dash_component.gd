@@ -13,12 +13,15 @@ signal reset
 # references for easier connections and better autocompletion
 @export var _player: Player
 @export var _dash_particles: GPUParticles2D
+@export var _anim_player: AnimationPlayer
 
 # flags if the dash is charged
 var _dash_ready := false
 
 # the duration of a dash (where the player travels a bit faster than normal)
 @onready var _dash_timer := $DashTimer
+# how long the player remains invincible after a dash
+@onready var _iframe_timer := $InvulnerableTimer
 # plays a sound at the start of the dash
 @onready var _dash_sfx := $DashSFX
 # plays a sound when the dash is ready to activate
@@ -39,6 +42,8 @@ func _physics_process(_delta: float) -> void:
 ## dash timer that determines how long the dash goes on for.
 func dash() -> void:
 	# make the player invincible
+	_iframe_timer.stop()
+	_anim_player.play("normal")
 	_player.invulnerable = true
 	
 	# start the initial boost
@@ -62,7 +67,10 @@ func _on_dash_timer_timeout() -> void:
 	# restart the dash charge-up
 	reset.emit()
 	
-	# TODO: start iframe timer
+	# start iframe timer
+	_iframe_timer.start()
+	_anim_player.play("invulnerable")
+	
 	# slow to regular speed
 	var _tween = create_tween()
 	_tween.tween_property(_player, "current_speed", _player.BASE_SPEED, 2.0).set_ease(Tween.EASE_OUT)
@@ -72,3 +80,8 @@ func _on_dash_charge_timeout() -> void:
 	# allow the player to activate the dash
 	_dash_ready = true
 	_dash_ready_sfx.play()
+
+
+func _on_invulnerable_timer_timeout() -> void:
+	_player.invulnerable = false
+	_anim_player.play("normal")

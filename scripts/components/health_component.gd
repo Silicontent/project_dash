@@ -20,9 +20,8 @@ func _ready() -> void:
 	_health = _MAX_HEALTH
 
 
-func damage(amt: float) -> void:
+func damage(amt: float = 1.0) -> void:
 	_health -= amt
-	
 	if _health <= 0.0:
 		entity_killed.emit()
 

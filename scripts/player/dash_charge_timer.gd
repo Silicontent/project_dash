@@ -1,7 +1,7 @@
 extends Timer
 
 # starting dash charge time
-const _INITIAL_TIME := 7.0
+const _INITIAL_TIME := 1.0
 # the dash charge can't take longer than this
 const _MAX_TIME := 15.0
 # how much the dash charge time increases by
