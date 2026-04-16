@@ -10,7 +10,7 @@ extends CharacterBody2D
 ## The default, regular movement speed.
 const BASE_SPEED := 1000.0
 ## The speed the player maintains during a dash.
-const DASH_SPEED := 1750.0
+const DASH_SPEED := 2000.0
 ## The initial boost of speed the player gets at the start of a dash.
 const MAX_SPEED := 5000.0
 

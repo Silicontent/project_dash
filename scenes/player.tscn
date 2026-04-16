@@ -124,11 +124,13 @@ script = ExtResource("8_smehm")
 [node name="DashSFX" type="AudioStreamPlayer" parent="DashComponent" unique_id=1620546593]
 editor_description = "The sound that plays at the beginning of a dash."
 stream = ExtResource("7_fjrip")
+volume_db = -5.0
 bus = &"SFX"
 
 [node name="DashReadySFX" type="AudioStreamPlayer" parent="DashComponent" unique_id=214578348]
 editor_description = "The sound that plays when the player's dash is ready to be used."
 stream = ExtResource("9_ur7pv")
+volume_db = -5.0
 bus = &"SFX"
 
 [connection signal="reset" from="DashComponent" to="DashComponent/DashChargeTimer" method="_reset"]
