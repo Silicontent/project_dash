@@ -68,6 +68,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="DebugInfo" type="Label" parent="UI/HUD" unique_id=535367789]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -77,8 +78,7 @@ offset_top = 20.0
 offset_right = -20.0
 offset_bottom = 57.0
 grow_horizontal = 0
-text = "Project: Dash v0.0.1
-ESC (keyboard) or Start (controller) twice to quit"
+text = "ESC (keyboard) or Start (controller) twice to quit"
 label_settings = SubResource("LabelSettings_gee14")
 horizontal_alignment = 2
 

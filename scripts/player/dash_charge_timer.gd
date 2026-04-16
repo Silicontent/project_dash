@@ -3,9 +3,9 @@ extends Timer
 # starting dash charge time
 const INITIAL_TIME := 7.0
 # the dash charge can't take longer than this
-const MAX_TIME := 20.0
+const MAX_TIME := 15.0
 # how much the dash charge time increases by
-const TIME_MULTIPLIER := 1.25
+const TIME_MULTIPLIER := 1.2
 
 # reference to the player
 @export var player: Player

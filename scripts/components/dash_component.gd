@@ -4,6 +4,7 @@ extends Node
 signal reset
 
 @onready var dash_timer := $DashTimer
+@onready var dash_sfx := $DashSFX
 # reference to the player for better autocompletion
 @export var player: Player
 
@@ -12,8 +13,10 @@ var dash_ready := false
 
 
 func _physics_process(_delta: float) -> void:
+	var moving := Input.get_vector("mv_left", "mv_right", "mv_up", "mv_down") != Vector2.ZERO
 	# start dashing if the player is able to
-	if Input.is_action_just_pressed("mv_dash") and dash_ready:
+	# the dash timer must be 0, and the player must be moving
+	if Input.is_action_just_pressed("mv_dash") and moving and dash_ready:
 		# prevent from dashing once started
 		dash_ready = false
 		dash()
@@ -25,6 +28,8 @@ func dash() -> void:
 	
 	# start the initial boost
 	player.current_speed = player.MAX_SPEED
+	dash_sfx.play()
+	player.explosion.restart()
 	
 	# slow to the regular dashing speed
 	var tween = create_tween()

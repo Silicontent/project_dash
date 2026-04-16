@@ -15,11 +15,15 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Project: Dash"
-config/version="0.0.1"
+config/version="0.0.2"
 config/tags=PackedStringArray("main_project")
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="uid://1j87b5ew8r45"
 
 [autoload]
 

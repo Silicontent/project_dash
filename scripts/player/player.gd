@@ -17,6 +17,9 @@ var current_speed: float
 
 # controls logic related to dashing
 @onready var dash := $DashComponent
+# extra particles to improve the feel of movement
+@onready var explosion: GPUParticles2D = $ExplosionParticles
+@onready var move_particles: GPUParticles2D = $MoveParticles
 
 # flags if the player is unable to take damage
 var invulnerable := false
@@ -40,9 +43,11 @@ func move() -> void:
 	if direction != Vector2.ZERO:
 		velocity.x = lerp(velocity.x, direction.x * current_speed, ACCELERATION)
 		velocity.y = lerp(velocity.y, direction.y * current_speed, ACCELERATION)
+		move_particles.emitting = true
 	else:
 		velocity.x = lerp(velocity.x, 0.0, FRICTION)
 		velocity.y = lerp(velocity.y, 0.0, FRICTION)
+		move_particles.emitting = false
 	
 	# move the player
 	move_and_slide()
@@ -50,6 +55,8 @@ func move() -> void:
 	# keep player inside of the game map
 	position.x = clamp(position.x, -1920, 3840)
 	position.y = clamp(position.y, -1080, 2160)
+	# orient move particles in the correct direction
+	move_particles.rotation = atan2(direction.y, direction.x)
 
 
 # DASHING ===============================================================================
